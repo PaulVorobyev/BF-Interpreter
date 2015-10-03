@@ -1,19 +1,8 @@
 import sys
 
-
-# program variables
+# program vars
 program = [0]*30000
 ptr = 0
-temp = list()
-
-# temporary temp methods. to be removed :)
-def setTemp(tempVal):
-    global temp
-    temp = tempVal
-
-def getTemp():
-    global temp
-    return temp
 
 def repl(prompt="bf> "):
     while True:
@@ -40,7 +29,7 @@ def read_tokens(tokens):
         tokens.pop(0) # pop off closing bracket ']'
         return loop
     elif token == ']':
-        raise SyntaxError('THIS SHOULD NOT BE HERE >:(')
+        raise SyntaxError('Unexpected \']\'')
     else:
         return token
 
@@ -62,7 +51,7 @@ def evaluate(parsed):
         elif(curr == "."):
             sys.stdout.write(chr(program[ptr]))
         elif(curr == ","):
-            usrInput = raw_input(">>> ")
+            usrInput = raw_input("\n>>> ")
             program[ptr] = ord(usrInput[0])
         elif(type(curr) is list and not (not curr)):
             if(program[ptr] == 0):
@@ -73,7 +62,7 @@ def evaluate(parsed):
                     evaluate(curr)
                     curr = list(temp)
         else:
-            raise SyntaxError("invalid input D:")
+            raise SyntaxError("Invalid character")
 
 if __name__ == "__main__":
     if(len(sys.argv) == 1):
@@ -81,5 +70,3 @@ if __name__ == "__main__":
     elif(len(sys.argv) == 2):
         for line in open(sys.argv[1], 'r'):
             parse(line)
-
-
